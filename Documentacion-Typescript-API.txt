@@ -152,8 +152,37 @@ Inicializado repositorio Git vacío en /home/renegade/Proyectos/Typescript-api/.
 Y añadimos un fichero oculto '.gitignore' al proyecto para añadir lo que no queramos subir
 en este caso, la carpeta: 'node_modules'
 
+17º Subimos al repositorio nuestro proyecto y hacemos commit de la primera versión:
+> git add .
+> git commit -m "Proyecto Typescript API: Primer capítulo"
 
+Nos falta configurar git para ejecutar el commit:
+*** Por favor cuéntame quien eres.
+Corre
+  git config --global user.email "you@example.com"
+  git config --global user.name "Tu Nombre"
+para configurar la identidad por defecto de tu cuenta.
+Omite --global para configurar tu identidad solo en este repositorio.
 
+> git config --global user.email "renegade...@gmail.com"
+> git config --global user.name  "Renegade..."
 
+Y ahora ejecutamos de nuevo: 
+> git commit -m "Proyecto Typescript API: Primer capítulo"
+
+renegade@MiPC:~/Proyectos/Typescript-api$ git commit -m "Proyecto Typescript API: Primer capítulo"
+[master (commit-raíz) de0bc56] Proyecto Typescript API: Primer capítulo
+ 8 files changed, 3254 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 Documentacion-Typescript-API.txt
+ create mode 100644 data/clubs.json
+ create mode 100644 data/resultados.json
+ create mode 100644 package-lock.json
+ create mode 100644 package.json
+ create mode 100644 src/index.ts
+ create mode 100644 tsconfig.json
+
+renegade@MiPC:~/Proyectos/Typescript-api$ git add .
+renegade@MiPC:~/Proyectos/Typescript-api$ git commit -m "Añado más información a fichero de documentación"
 
 
