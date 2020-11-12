@@ -185,4 +185,35 @@ renegade@MiPC:~/Proyectos/Typescript-api$ git commit -m "Proyecto Typescript API
 renegade@MiPC:~/Proyectos/Typescript-api$ git add .
 renegade@MiPC:~/Proyectos/Typescript-api$ git commit -m "Añado más información a fichero de documentación"
 
+18º Quiero añadir un directorio remoto (git add remote...)
+
+> git remote add TypescriptAPI https://github.com/RenegadeAsturias/TypescriptAPI.git
+
+19º Para ver los remotos:
+> git remote
+TypescriptAPI
+
+20º Ahora queremos enviar el código de nuestro repositorio a la nube:
+¡Pero ojo que el repositorio debe existir en GitHub antes de hacer el push!
+Desde GitHub me he creado un repositorio: 'TypescriptAPI'
+
+Y ahora para subir el código a GitHub:
+> git push <<nombre del remoto>> <<rama que queremos subir>>
+> git push origin master <- Sube el código de la rama master
+> git push origin --all  <- Sube todo el código al servidor remoto
+
+enegade@MiPC:~/Proyectos/Typescript-api$ git push TypescriptAPI master
+Enumerando objetos: 15, listo.
+Contando objetos: 100% (15/15), listo.
+Compresión delta usando hasta 4 hilos
+Comprimiendo objetos: 100% (13/13), listo.
+Escribiendo objetos: 100% (15/15), 10.57 KiB | 902.00 KiB/s, listo.
+Total 15 (delta 3), reusado 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), done.
+To https://github.com/RenegadeAsturias/TypescriptAPI.git
+ * [new branch]      master -> master
+
+renegade@MiPC:~/Proyectos/Typescript-api$ git add .
+renegade@MiPC:~/Proyectos/Typescript-api$ git commit -m "Añado más información a fichero de documentación. Referente a cómo subir el código del proyecto a GitHub."
+
 
