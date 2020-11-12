@@ -1,0 +1,159 @@
+
+1º- VOY A CREAR UN PROYECTO : npm
+
+renegade@MiPC:~/Proyectos/Typescript-api$ npm init
+This utility will walk you through creating a package.json file.
+It only covers the most common items, and tries to guess sensible defaults.
+
+See `npm help json` for definitive documentation on these fields
+and exactly what they do.
+
+Use `npm install <pkg>` afterwards to install a package and
+save it as a dependency in the package.json file.
+
+Press ^C at any time to quit.
+package name: (typescript-api) com.typescript.api
+version: (1.0.0) 
+description: Ejemplo de Api en Typescript
+entry point: (index.js) dist/index.js
+test command: 
+git repository: 
+keywords: 
+author: 
+license: (ISC) 
+About to write to /home/renegade/Proyectos/Typescript-api/package.json:
+
+{
+  "name": "com.typescript.api",
+  "version": "1.0.0",
+  "description": "Ejemplo de Api en Typescript",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+
+Is this OK? (yes) 
+renegade@MiPC:~/Proyectos/Typescript-api$ 
+
+2º- Desde el Visual Studio Code abro una terminal
+
+3º- Y ahora instalo Typescript
+(Se instala en -dev porque typescript es un transpilador y es una dependencia de desarrollo)
+renegade@MiPC:~/Proyectos/Typescript-api$ npm i --save-dev typescript
+
+En el package.json me añade la dependecia en:
+"devDependencies": {
+    "typescript": "^4.0.5"
+}
+Y añade la librería en la carpeta: node_modules/typescript
+
+4º Me instalo: sudo apt-get install curl
+
+5º Me descargo los siguientes JSON de:
+curl -O https://raw.githubusercontent.com/openfootball/football.json/master/2020-21/es.1.clubs.json
+curl -O https://raw.githubusercontent.com/openfootball/football.json/master/2020-21/es.1.json
+
+Los renombro y los muevo a la carpeta '/data' como: 'clubs.json' y 'resultados.json'
+
+6º Vamos a crear el 'tsconfig.json' para nuestra aplicación de Typescript
+> node_modules/.bin/tsc --init
+> message TS6071: Successfully created a tsconfig.json file.
+
+7º Ahora configuramos manualmente en el 'tsconfig.json' las siguientes líneas:
+"outDir": "./dist",    /* Redirect output structure to the directory. */
+"rootDir": "./src",    /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
+
+8º En el 'package.json' añadimos el siguiente script
+"scripts": {
+  "build": "tsc"  // Esto nos permitirá ejecutar desde consola: nmp run build
+},
+
+9º Y para hacer la prueba vamos a crear una carpeta: 'src/'
+y añadimos un nuevo fichero: 'index.ts' 
+
+10º En el fichero: 'index.ts' 
+const clubs = require('../data/clubs.json');  // Con 'require' importamos el fichero .json desde Javascript
+
+El Visual Studio nos avisa del siguiente error al intentar utilizar 'require':
+No se encuentra el nombre "require". ¿Necesita instalar definiciones de tipo para el nodo? 
+Pruebe "npm i @types/node".ts(2580)
+
+Es porque nuestro fichero es de tipo typescript y typescript obviamente no sabe nada de Javascript 
+así que si queremos utilizar 'require' tendremos que instalar las definiciones de tipo para el nodo
+Ejecutamos desde la consulta la indicación 
+y para que añada la dependecia a nuestras dependecias de desarrollo indicamos '--save-dev'
+> npm i @types/node --save-dev
+
+En el package.json me añade la dependecia en:
+"devDependencies": {
+  "@types/node": "^14.14.7",
+}
+Y añade la librería en la carpeta: node_modules/@types/node
+
+11º En el fichero: 'index.ts' añadimos un console.log para ver el json :
+const clubs = require('../data/clubs.json');  // Con 'require' importamos el fichero .json desde Javascript
+console.log(clubs);
+
+12º En el 'package.json' añadimos el siguiente scripts
+"scripts": {
+  "build": "tsc"  // Esto nos permitirá ejecutar desde consola: nmp run build
+  "start": "node dist/index.js"
+},
+
+13º Y ejecutamos desde la consola:
+> npm run build  -> Esto ejecuta 'node_modules/.bin/tsc' que: transpila el fichero 'index.ts'
+Y deja el fichero generado en './dist/index.js' por la configuración del 'tsconfig.json'
+> com.typescript.api@1.0.0 build /home/renegade/Proyectos/Typescript-api
+> tsc
+
+14º Y si ejecuto:
+> npm run start  -> Esto ejecuta 'node dist/index.js' que ejecuta el fichero javascript 'index.js' en la consola e imprime los resultados: 'console.log(clubs);'
+> com.typescript.api@1.0.0 start /home/renegade/Proyectos/Typescript-api
+> node dist/index.js
+{ name: 'Primera División 2020/21',
+  clubs:
+   [ { name: 'Elche CF', code: 'ELC', country: 'Spain' },
+
+15º Queremos añadir un nuevo script 'clean' que borre el directorio 'dist'
+"scripts": { ...
+  "clean": "rm -rf dist"
+},
+
+En principio si el comando se ejecuta en linux esto: 'rm -rf dist' 
+borraría correctamente el directorio pero si se ejecuta desde la consola de windows podría dar algún problema.
+
+Para hacerlo bien, vamos a añadir un nuevo paquete 'rimraf' que hace un 'rm' multiplataforma
+> npm i --save-dev rimraf
+
+En el package.json me añade la dependecia en:
+"devDependencies": {
+  "@types/node": "^14.14.7",
+  "rimraf": "^3.0.2",
+  "typescript": "^4.0.5"
+}
+Y añade (entre otras) la librería en la carpeta: node_modules/rimraf
+
+Entonces para añadir un nuevo script 'clean' que borre el directorio 'dist' utilizando 'rimraf':
+"scripts": { ...
+  "clean": "rimraf dist"  // Borra la carperta 'dist' en cualquier plataforma
+},
+
+Ejecutamos en la consola:
+> npm run clean  
+Y comprobamos que nos borra el directorio 'dist' y lo hace correctamente.
+
+16º Vamos a hacer un repositorio git:
+> git init
+Inicializado repositorio Git vacío en /home/renegade/Proyectos/Typescript-api/.git/
+
+Y añadimos un fichero oculto '.gitignore' al proyecto para añadir lo que no queramos subir
+en este caso, la carpeta: 'node_modules'
+
+
+
+
+
+
