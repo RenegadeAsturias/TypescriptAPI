@@ -1,0 +1,109 @@
+
+Recuerda que: ***********************************************************************
+Utilice el mandato npm init para crear un archivo package.json para la aplicación. 
+Para obtener más información sobre cómo funciona package.json,
+
+Ojo a esto que aparece en la documentación de expressjs.com *************************
+Los módulos de Node que se instalan con la opción --save
+se añaden a la lista dependencies en el archivo package.json. 
+Posteriormente, si ejecuta npm install en el directorio app, 
+los módulos se instalarán automáticamente en la lista de dependencias.
+*************************************************************************************
+
+21º- Vamos a añadir una librería llamada: Express (https://expressjs.com/es/)
+Express es una librería que sirve para hacer servidores web minimalistas.
+Infraestructura web rápida, minimalista y flexible para Node.js
+> npm install express --save
+
+
+22º- Express es una librería que cuando la importas te permite crear
+una app llamando a la función 'express()'
+y luego se puede configurar añadiéndole rutas 
+
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+Cuando terminas de añadir los endpoints añades un listener para las peticiones de los clientes
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
+
+******************************************************************************
+
+23º.- Instalamos Express
+esta librería tiene que estar disponible en el proyecto para que funcione
+cuando la aplicación se despliegue:
+> npm install express --save
+
+24º.- Dice Dani que a él le gusta crear servidores separados
+y crea en 'scr/server.ts'
+donde vamos a añadir una función constructora que te haga el app y te lo devuelva.
+
+Cuando importamos la librería express, en el fichero 'src/server.ts'
+import express from 'express'
+
+Visual Studio code nos indica:
+No se encontró ningún archivo de declaración para el módulo 'express'.
+'/home/renegade/Proyectos/Typescript-api/node_modules/express/index.js' 
+tiene un tipo "any" de forma implícita.
+Pruebe "npm install @types/express" si existe o agregue un nuevo archivo de declaración (.d.ts) 
+que incluya "declare module 'express';".ts(7016)
+
+así que instalamos la librería: '@types/express' 
+y añadimos la dependencia al proyecto:
+> npm install @types/express --save-dev
+
+24º.- Creamos un nuevo fichero 'src/index.ts'
+previamente habíamos borrado este fichero
+en el que en el capítulo 1 metimos:
+
+const clubs = require('../data/clubs.json');
+console.log(clubs);
+
+25º.- fichero 'src/index.ts'
+
+// Importamos la función que crea el servidor de 'server.ts'
+import createServer from './server'
+
+// Invocamos la función para que cree el servido y añada el endpoint creado
+// En el callback de la función metemos un mensaje que se pintará
+// cuando el servidor se levante y ya estemos escuchando
+createServer().listen(3000, () => {
+    console.log('El servidor ya está levantado y estamos escuchando...');
+});
+
+26º.- Transpilamos
+> npm run build
+>> com.typescript.api@1.0.0 build /home/renegade/Proyectos/Typescript-api
+>> tsc
+
+27º.- Y ejecutamos el código Javascript con node
+npm run start
+>> com.typescript.api@1.0.0 start /home/renegade/Proyectos/Typescript-api
+>> node dist/index.js
+El servidor ya está levantado y estamos escuchando...
+
+28º.- Y ahora probamos el EntPoint que añadimos en el Server.ts:
+
+app.get('/resultados/:equipo1/:equipo2', (req, res) => {
+    res.send(`Resultados del ${req.params.equipo1} vs ${req.params.equipo2}`)
+});
+
+Para hacer la petición al servidor, hacemos clic en el botón + 
+para obtener una nueva terminal porque en la otra hay un listener activo
+y no se puede escribir en esa consola. Desde la nueva consola ejecutamos:
+> curl http://localhost:3000/resultados/MAD/BAR
+
+Y muestra los parámetros enviados por la URL:
+>> Resultados del MAD vs BAR
+
+29º- Vamos a subir todos los cambios a GitHub. Ejecutamos:
+> git add .
+> git commit -m "Todos los cambios del capítulo 2. Mostrando un servidor Express"
+> git push TypescriptAPI master
+
